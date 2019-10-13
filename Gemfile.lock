@@ -2,7 +2,8 @@ PATH
   remote: .
   specs:
     has_encrypted_token (0.0.0)
-      activerecord (>= 3.0, < 5.0)
+      activerecord (>= 3.0)
+      bcrypt (>= 3.0)
 
 GEM
   remote: https://rubygems.org/
@@ -20,6 +21,7 @@ GEM
       thread_safe (~> 0.3, >= 0.3.4)
       tzinfo (~> 1.1)
     arel (6.0.4)
+    bcrypt (3.1.13)
     builder (3.2.3)
     byebug (11.0.1)
     concurrent-ruby (1.1.5)
