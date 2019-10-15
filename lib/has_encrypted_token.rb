@@ -9,13 +9,14 @@ module ActiveRecord
       def has_encrypted_token(attribute = :token)
         define_method("regenerate_#{attribute}") do
           unencrypted_token = self.class.generate_token
-          encrypted_token = BCrypt::Password.create(
-            unencrypted_token,
-            :cost => BCrypt::Engine::DEFAULT_COST
-          )
+          encrypted_token = encrypt_token(unencrypted_token)
 
           update_attribute(attribute, encrypted_token)
           unencrypted_token
+        end
+
+        define_method("#{attribute}=") do |unencrypted_token|
+          super(encrypt_token(unencrypted_token))
         end
 
         define_method("authenticate_#{attribute}") do |unencrypted_token|
@@ -30,6 +31,15 @@ module ActiveRecord
       def generate_token
         SecureRandom.hex(24)
       end
+    end
+
+    private
+
+    def encrypt_token(unencrypted_token)
+      BCrypt::Password.create(
+        unencrypted_token,
+        :cost => BCrypt::Engine::DEFAULT_COST
+      )
     end
   end
 end

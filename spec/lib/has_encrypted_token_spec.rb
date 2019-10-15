@@ -16,7 +16,7 @@ describe ActiveRecord::EncryptedToken do
     end
   end
 
-  context 'generating and validating tokens' do
+  context 'generating, validating and storing tokens' do
     let(:unencrypted_token) { 'unencrypted_token' }
     let(:encrypted_token) { '$encrypted_token$' }
 
@@ -52,6 +52,28 @@ describe ActiveRecord::EncryptedToken do
 
         it 'returns false if it does not match the stored value' do
           expect(user.authenticate_token('derp derp')).to eq(false)
+        end
+      end
+    end
+
+    describe '#{attribute}=' do
+      context 'when passed a value' do
+        it 'encrypts it and stores the encrypted value in the model instance' do
+          user.token = unencrypted_token
+
+          expect(user.token).to eq(encrypted_token)
+        end
+
+        it 'returns the original value' do
+          expect(user.token = unencrypted_token).to eq(unencrypted_token)
+        end
+      end
+
+      context 'when passed a number' do
+        it 'encrypts it and stores it in the model instance' do
+          user.token = unencrypted_token
+
+          expect(user.token).to eq(encrypted_token)
         end
       end
     end
