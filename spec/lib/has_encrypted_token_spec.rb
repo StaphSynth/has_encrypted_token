@@ -62,18 +62,11 @@ describe ActiveRecord::EncryptedToken do
           user.token = unencrypted_token
 
           expect(user.token).to eq(encrypted_token)
+          expect(User.find(user.id).token).to be_nil
         end
 
         it 'returns the original value' do
           expect(user.token = unencrypted_token).to eq(unencrypted_token)
-        end
-      end
-
-      context 'when passed a number' do
-        it 'encrypts it and stores it in the model instance' do
-          user.token = unencrypted_token
-
-          expect(user.token).to eq(encrypted_token)
         end
       end
     end
