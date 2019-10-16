@@ -28,8 +28,14 @@ module ActiveRecord
         end
       end
 
-      def generate_token
-        SecureRandom.hex(24)
+      def generate_token(length = 48)
+        begin
+          n = length.to_i
+        rescue NoMethodError
+          raise ArgumentError, 'Token length must be an integer'
+        end
+
+        SecureRandom.hex(n / 2) # hex returns n * 2
       end
     end
 

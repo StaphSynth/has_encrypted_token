@@ -16,7 +16,7 @@ describe ActiveRecord::EncryptedToken do
     end
   end
 
-  context 'generating, validating and storing tokens' do
+  context 'instance methods' do
     let(:unencrypted_token) { 'unencrypted_token' }
     let(:encrypted_token) { '$encrypted_token$' }
 
@@ -74,6 +74,33 @@ describe ActiveRecord::EncryptedToken do
           user.token = unencrypted_token
 
           expect(user.token).to eq(encrypted_token)
+        end
+      end
+    end
+  end
+
+  describe 'class methods' do
+    describe '.generate_token' do
+      let(:random_token) { 'abc123' }
+
+      context 'with no arguments' do
+        before do
+          allow(SecureRandom).to receive(:hex).and_return(random_token)
+        end
+
+        it 'returns a token when called' do
+          expect(User.generate_token).to eq(random_token)
+        end
+      end
+
+      context 'when passing a length' do
+        it 'validates the length is coercable to an integer' do
+          expect{ User.generate_token(12) }.not_to raise_error
+          expect{ User.generate_token(false) }.to raise_error(ArgumentError)
+        end
+
+        it 'returns a token of that length' do
+          expect(User.generate_token(20).size).to eq(20)
         end
       end
     end
