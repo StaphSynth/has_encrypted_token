@@ -22,7 +22,7 @@ module ActiveRecord
         define_method("authenticate_#{attribute}") do |unencrypted_token|
           begin
             BCrypt::Password.new(self.send(attribute)) == unencrypted_token
-          rescue BCrypt::Errors::InvalidHash
+          rescue BCrypt::Error
             false
           end
         end
