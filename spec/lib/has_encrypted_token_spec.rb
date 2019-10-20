@@ -45,17 +45,27 @@ describe ActiveRecord::EncryptedToken do
     end
 
     describe '#authenticate_{attribute}' do
-      context 'when passed an unencrypted token' do
-        before do
-          user.regenerate_token
-        end
+      before do
+        user.regenerate_token
+      end
 
+      context 'when passed an unencrypted token' do
         it 'returns true if it matches the stored value' do
           expect(user.authenticate_token(unencrypted_token)).to eq(true)
         end
 
         it 'returns false if it does not match the stored value' do
           expect(user.authenticate_token('derp derp')).to eq(false)
+        end
+      end
+
+      context 'when passed bad data' do
+        before do
+          allow(BCrypt::Password).to receive(:new).and_raise(BCrypt::Error)
+        end
+
+        it 'returns false' do
+          expect(user.authenticate_token({ bad: 'data' })).to eq(false)
         end
       end
     end
