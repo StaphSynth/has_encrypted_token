@@ -1,18 +1,22 @@
 require 'spec_helper'
 
 describe ActiveRecord::EncryptedToken do
-  let(:user) do
-    user = User.create
-    user
-  end
+  let(:user) { User.create }
 
-  describe 'attribute names' do
-    it 'defaults to token' do
-      expect(user.respond_to?(:token)).to be(true)
+  describe 'attribute name for token storage and related methods' do
+    context 'when no argument is passed' do
+      it 'defaults to "token"' do
+        expect(user.respond_to?(:regenerate_token)).to be(true)
+      end
     end
 
-    it 'respects alternative attribute names' do
-      expect(user.respond_to?(:shared_secret)).to be(true)
+    context 'when a symbol is passed' do
+      let(:user) { SpecialUser.create }
+
+      it 'uses it as an attribute name' do
+        expect(user.respond_to?(:regenerate_shared_secret)).to be(true)
+        expect(user.respond_to?(:regenerate_token)).to be(false)
+      end
     end
   end
 

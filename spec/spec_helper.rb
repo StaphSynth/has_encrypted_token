@@ -1,7 +1,7 @@
 require 'byebug'
 require 'database_cleaner'
 require 'has_encrypted_token'
-require_relative './support/user'
+require_relative './support/model'
 
 RSpec.configure do |config|
   config.shared_context_metadata_behavior = :apply_to_host_groups
