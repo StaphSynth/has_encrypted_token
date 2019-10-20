@@ -1,8 +1,11 @@
 require 'byebug'
+require 'database_cleaner'
 require 'has_encrypted_token'
 require_relative './support/user'
 
 RSpec.configure do |config|
+  config.shared_context_metadata_behavior = :apply_to_host_groups
+
   config.expect_with :rspec do |expectations|
     expectations.include_chain_clauses_in_custom_matcher_descriptions = true
   end
@@ -11,13 +14,19 @@ RSpec.configure do |config|
     mocks.verify_partial_doubles = true
   end
 
-  config.shared_context_metadata_behavior = :apply_to_host_groups
+  config.before :suite do
+    ActiveRecord::Base.establish_connection adapter: 'sqlite3', database: ':memory:'
+    ActiveRecord::Migration.suppress_messages do
+      load 'support/schema.rb'
+    end
+  end
+
+  config.before :each do
+    DatabaseCleaner.strategy = :transaction
+    DatabaseCleaner.start
+  end
+
+  config.after :each do
+    DatabaseCleaner.clean
+  end
 end
-
-DB_FILE = 'db/test.db'
-FileUtils.mkdir_p File.dirname(DB_FILE)
-FileUtils.rm_f DB_FILE
-
-ActiveRecord::Base.establish_connection adapter: 'sqlite3', database: DB_FILE
-
-load 'support/schema.rb'
