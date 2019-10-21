@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe ActiveRecord::EncryptedToken do
+describe ActiveRecord::ProtectedToken do
   let(:user) { User.create }
 
   describe 'attribute name for token storage and related methods' do
@@ -21,26 +21,26 @@ describe ActiveRecord::EncryptedToken do
   end
 
   context 'instance methods' do
-    let(:unencrypted_token) { 'unencrypted_token' }
-    let(:encrypted_token) { '$encrypted_token$' }
+    let(:raw_token) { 'raw_token' }
+    let(:hashed_token) { '$hashed_token$' }
 
     before do
-      allow(User).to receive(:generate_token).and_return(unencrypted_token)
-      allow(BCrypt::Password).to receive(:create).and_return(encrypted_token)
+      allow(User).to receive(:generate_token).and_return(raw_token)
+      allow(BCrypt::Password).to receive(:create).and_return(hashed_token)
       allow(BCrypt::Password).to(
-        receive(:new).with(encrypted_token).and_return(unencrypted_token)
+        receive(:new).with(hashed_token).and_return(raw_token)
       )
     end
 
     describe '#regenerate_{attribute}' do
       it 'returns a new token' do
-        expect(user.regenerate_token).to eq(unencrypted_token)
+        expect(user.regenerate_token).to eq(raw_token)
       end
 
-      it 'encrypts the new token and stores it in the database' do
+      it 'hashes the new token and stores it in the database' do
         user.regenerate_token
 
-        expect(user.reload.token).to eq(encrypted_token)
+        expect(user.reload.token).to eq(hashed_token)
       end
     end
 
@@ -49,9 +49,9 @@ describe ActiveRecord::EncryptedToken do
         user.regenerate_token
       end
 
-      context 'when passed an unencrypted token' do
+      context 'when passed an plain text token' do
         it 'returns true if it matches the stored value' do
-          expect(user.authenticate_token(unencrypted_token)).to eq(true)
+          expect(user.authenticate_token(raw_token)).to eq(true)
         end
 
         it 'returns false if it does not match the stored value' do
@@ -72,15 +72,15 @@ describe ActiveRecord::EncryptedToken do
 
     describe '#{attribute}=' do
       context 'when passed a value' do
-        it 'encrypts it and stores the encrypted value in the model instance' do
-          user.token = unencrypted_token
+        it 'hashes it and stores the hashed value in the model instance' do
+          user.token = raw_token
 
-          expect(user.token).to eq(encrypted_token)
+          expect(user.token).to eq(hashed_token)
           expect(User.find(user.id).token).to be_nil
         end
 
         it 'returns the original value' do
-          expect(user.token = unencrypted_token).to eq(unencrypted_token)
+          expect(user.token = raw_token).to eq(raw_token)
         end
       end
     end

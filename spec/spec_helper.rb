@@ -1,6 +1,6 @@
 require 'byebug'
 require 'database_cleaner'
-require 'has_encrypted_token'
+require 'has_protected_token'
 require_relative './support/model'
 
 RSpec.configure do |config|
