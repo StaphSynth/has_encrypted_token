@@ -2,28 +2,55 @@ require 'spec_helper'
 
 describe ActiveRecord::ProtectedToken do
   let(:user) { User.create }
+  let(:raw_token) { 'raw_token' }
+  let(:hashed_token) { '$hashed_token$' }
 
-  describe 'attribute name for token storage and related methods' do
-    context 'when no argument is passed' do
-      it 'defaults to "token"' do
-        expect(user.respond_to?(:regenerate_token)).to be(true)
+  describe 'options hash' do
+    describe 'column_name' do
+      context 'when no value is provided' do
+        it 'defaults to "token"' do
+          expect(user.respond_to?(:regenerate_token)).to be(true)
+        end
+      end
+
+      context 'when a symbol is passed' do
+        let(:user) { SpecialUser.create }
+
+        it 'uses it as an attribute name' do
+          expect(user.respond_to?(:regenerate_shared_secret)).to be(true)
+          expect(user.respond_to?(:regenerate_token)).to be(false)
+        end
       end
     end
 
-    context 'when a symbol is passed' do
-      let(:user) { SpecialUser.create }
+    describe 'cost' do
+      context 'when no value provided' do
+        it 'defaults to BCrypt::Engine::DEFAULT_COST' do
+          expect(BCrypt::Password).to receive(:create).with(
+            raw_token,
+            cost: BCrypt::Engine::DEFAULT_COST
+          )
 
-      it 'uses it as an attribute name' do
-        expect(user.respond_to?(:regenerate_shared_secret)).to be(true)
-        expect(user.respond_to?(:regenerate_token)).to be(false)
+          user.token = raw_token
+        end
+      end
+
+      context 'when an integer is provided' do
+        let(:user) { CostedUser.new }
+
+        it 'accepts that instead' do
+          expect(BCrypt::Password).to receive(:create).with(
+            raw_token,
+            cost: 9
+          )
+
+          user.token = raw_token
+        end
       end
     end
   end
 
   context 'instance methods' do
-    let(:raw_token) { 'raw_token' }
-    let(:hashed_token) { '$hashed_token$' }
-
     before do
       allow(User).to receive(:generate_token).and_return(raw_token)
       allow(BCrypt::Password).to receive(:create).and_return(hashed_token)

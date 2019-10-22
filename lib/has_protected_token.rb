@@ -6,17 +6,20 @@ module ActiveRecord
     extend ActiveSupport::Concern
 
     module ClassMethods
-      def has_protected_token(attribute = :token)
+      def has_protected_token(options = {})
+        attribute = options[:column_name] || :token
+        cost = options[:cost] || BCrypt::Engine::DEFAULT_COST
+
         define_method("regenerate_#{attribute}") do
           raw_token = self.class.generate_token
-          hashed_token = hash_token(raw_token)
+          hashed_token = hash_token(raw_token, cost)
 
           update_attribute(attribute, hashed_token)
           raw_token
         end
 
         define_method("#{attribute}=") do |raw_token|
-          super(hash_token(raw_token))
+          super(hash_token(raw_token, cost))
         end
 
         define_method("authenticate_#{attribute}") do |raw_token|
@@ -39,11 +42,8 @@ module ActiveRecord
 
     private
 
-    def hash_token(raw_token)
-      BCrypt::Password.create(
-        raw_token,
-        :cost => BCrypt::Engine::DEFAULT_COST
-      )
+    def hash_token(raw_token, cost)
+      BCrypt::Password.create(raw_token, :cost => cost)
     end
   end
 end

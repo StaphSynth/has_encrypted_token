@@ -11,12 +11,12 @@ Gem::Specification.new do |s|
   s.license     = 'MIT'
 
   s.add_dependency 'activerecord', '>= 3.0'
-  s.add_dependency 'bcrypt', '>= 3.0'
+  s.add_dependency 'bcrypt', '~> 3.1.1'
 
   s.add_development_dependency 'bundler', '~> 1.17.3'
   s.add_development_dependency 'rake'
   s.add_development_dependency 'rspec'
-  s.add_development_dependency 'sqlite3', '~> 1.3.13'
+  s.add_development_dependency 'sqlite3'
   s.add_development_dependency 'byebug'
   s.add_development_dependency 'database_cleaner'
 end
