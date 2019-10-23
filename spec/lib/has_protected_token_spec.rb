@@ -118,12 +118,8 @@ describe ActiveRecord::ProtectedToken do
       let(:random_token) { 'abc123' }
 
       context 'with no arguments' do
-        before do
-          allow(SecureRandom).to receive(:hex).and_return(random_token)
-        end
-
-        it 'returns a token when called' do
-          expect(User.generate_token).to eq(random_token)
+        it 'returns a token 24 chars in length' do
+          expect(User.generate_token.size).to eq(24)
         end
       end
 

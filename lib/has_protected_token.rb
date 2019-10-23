@@ -96,7 +96,7 @@ module ActiveRecord
       #
       # Accepts an optional integer to specify the length
       # of the returned token.
-      def generate_token(length = 48)
+      def generate_token(length = 24)
         n = length.to_i
         SecureRandom.hex(n / 2) # hex returns n * 2
 
