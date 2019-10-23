@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    has_protected_token (0.0.0)
+    has_protected_token (0.0.0.pre.alpha)
       activerecord (>= 3.0)
       bcrypt (~> 3.1.1)
 
