@@ -1,13 +1,13 @@
 Gem::Specification.new do |s|
   s.name        = 'has_protected_token'
-  s.version     = '0.0.0'
+  s.version     = '0.0.0-alpha'
   s.date        = '2019-10-06'
-  s.summary     = ''
-  s.description = ''
-  s.authors     = ['David Allen']
+  s.summary     = 'Easily generate random tokens for any ActiveRecord model and store them securely in the database.'
+  s.description = 'Generate random tokens (or use your own) for any ActiveRecord model. Hashes and salts the token before storage in the database using the same methodology as has_secure_password.'
+  s.author      = 'David Allen'
   s.email       = '1337dallen@gmail.com' # yes, I know it's a terrible email address...
-  s.files       = ['lib/has_protected_token']
-  s.homepage    = 'https://rubygems.org/gems/has_protected_token'
+  s.files       = `git ls-files`.split("\n")
+  s.homepage    = 'https://github.com/StaphSynth/has_protected_token'
   s.license     = 'MIT'
 
   s.add_dependency 'activerecord', '>= 3.0'
@@ -19,4 +19,5 @@ Gem::Specification.new do |s|
   s.add_development_dependency 'sqlite3'
   s.add_development_dependency 'byebug'
   s.add_development_dependency 'database_cleaner'
+  s.add_development_dependency 'bump'
 end
