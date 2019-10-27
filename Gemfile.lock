@@ -1,8 +1,8 @@
 PATH
   remote: .
   specs:
-    has_protected_token (0.0.0.pre.alpha)
-      activerecord (>= 3.0)
+    has_protected_token (0.0.0.pre.beta)
+      activerecord (>= 4.2)
       bcrypt (~> 3.1.1)
 
 GEM
