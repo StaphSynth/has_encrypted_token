@@ -1,6 +1,6 @@
 Gem::Specification.new do |s|
   s.name        = 'has_protected_token'
-  s.version     = '0.0.0-alpha'
+  s.version     = '0.0.0-beta'
   s.date        = '2019-10-06'
   s.summary     = 'Easily generate random tokens for any ActiveRecord model and store them securely in the database.'
   s.description = 'Generate random tokens (or use your own) for any ActiveRecord model. Hashes and salts the token before storage in the database using the same methodology as has_secure_password.'
