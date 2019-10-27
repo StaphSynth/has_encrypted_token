@@ -1,5 +1,33 @@
 language: ruby
 cache: bundler
+rvm:
+  - 2.2
+  - 2.3
+  - 2.4
+  - 2.5
+  - 2.6
+
+gemfile:
+  - gemfiles/AR_4.2.gemfile
+  - gemfiles/AR_5.0.gemfile
+  - gemfiles/AR_5.1.gemfile
+  - gemfiles/AR_5.2.gemfile
+  - gemfiles/AR_6.0.gemfile
+
+matrix:
+  exclude:
+    - rvm: 2.2
+      gemfile: gemfiles/AR_5.0.gemfile
+    - rvm: 2.2
+      gemfile: gemfiles/AR_5.1.gemfile
+    - rvm: 2.2
+      gemfile: gemfiles/AR_5.2.gemfile
+    - rvm: 2.2
+      gemfile: gemfiles/AR_6.0.gemfile
+    - rvm: 2.3
+      gemfile: gemfiles/AR_6.0.gemfile
+    - rvm: 2.4
+      gemfile: gemfiles/AR_6.0.gemfile
 
 before_install:
   - gem install bundler -v 1.17.3

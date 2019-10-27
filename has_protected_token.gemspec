@@ -9,8 +9,9 @@ Gem::Specification.new do |s|
   s.files       = `git ls-files`.split("\n")
   s.homepage    = 'https://github.com/StaphSynth/has_protected_token'
   s.license     = 'MIT'
+  s.required_ruby_version = '>= 2.2'
 
-  s.add_dependency 'activerecord', '>= 3.0'
+  s.add_dependency 'activerecord', '>= 4.2'
   s.add_dependency 'bcrypt', '~> 3.1.1'
 
   s.add_development_dependency 'bundler', '~> 1.17.3'
@@ -20,4 +21,5 @@ Gem::Specification.new do |s|
   s.add_development_dependency 'byebug'
   s.add_development_dependency 'database_cleaner'
   s.add_development_dependency 'bump'
+  s.add_development_dependency 'appraisal'
 end
