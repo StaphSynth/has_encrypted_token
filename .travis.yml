@@ -19,6 +19,15 @@ matrix:
       gemfile: gemfiles/AR_6.0.gemfile
     - rvm: 2.4
       gemfile: gemfiles/AR_6.0.gemfile
+    - rvm: 2.6
+      gemfile: gemfiles/AR_4.2.gemfile
+  include:
+    - rvm: 2.6
+      gemfile: Gemfile
+    - stage: linting
+      rvm: 2.3
+      script: rake lint
+      gemfile: gemfiles/AR_4.2.gemfile
 
 before_install:
   - gem install bundler -v 1.17.3

@@ -9,4 +9,8 @@ RSpec::Core::RakeTask.new :test do |task|
   task.pattern = Dir.glob('spec/**/*_spec.rb')
 end
 
+task :lint do
+  sh('bundle exec rubocop')
+end
+
 task default: :test
