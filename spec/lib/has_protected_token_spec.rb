@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'spec_helper'
 
 describe ActiveRecord::ProtectedToken do
@@ -59,7 +61,7 @@ describe ActiveRecord::ProtectedToken do
       )
     end
 
-    describe '#regenerate_{attribute}' do
+    describe '#regenerate_token' do
       it 'returns a new token' do
         expect(user.regenerate_token).to eq(raw_token)
       end
@@ -71,7 +73,7 @@ describe ActiveRecord::ProtectedToken do
       end
     end
 
-    describe '#authenticate_{attribute}' do
+    describe '#authenticate_token' do
       before do
         user.regenerate_token
       end
@@ -92,12 +94,12 @@ describe ActiveRecord::ProtectedToken do
         end
 
         it 'returns false' do
-          expect(user.authenticate_token({ bad: 'data' })).to eq(false)
+          expect(user.authenticate_token(bad: 'data')).to eq(false)
         end
       end
     end
 
-    describe '#{attribute}=' do
+    describe '#token=' do
       context 'when passed a value' do
         it 'hashes it and stores the hashed value in the model instance' do
           user.token = raw_token
@@ -125,8 +127,8 @@ describe ActiveRecord::ProtectedToken do
 
       context 'when passing a length' do
         it 'validates the length is coercable to an integer' do
-          expect{ User.generate_token(12) }.not_to raise_error
-          expect{ User.generate_token(false) }.to raise_error(ArgumentError)
+          expect { User.generate_token(12) }.not_to raise_error
+          expect { User.generate_token(false) }.to raise_error(ArgumentError)
         end
 
         it 'returns a token of that length' do
