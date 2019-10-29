@@ -1,0 +1,17 @@
+AllCops:
+  TargetRubyVersion: 2.3
+
+Metrics/LineLength:
+  Exclude:
+    - has_protected_token.gemspec
+
+Naming/FileName:
+  Exclude:
+    - gemfiles/*
+
+Metrics/BlockLength:
+  Exclude:
+    - spec/**/*
+
+Naming/PredicateName:
+  Enabled: false

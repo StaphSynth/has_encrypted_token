@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'byebug'
 require 'database_cleaner'
 require 'has_protected_token'
@@ -15,7 +17,10 @@ RSpec.configure do |config|
   end
 
   config.before :suite do
-    ActiveRecord::Base.establish_connection adapter: 'sqlite3', database: ':memory:'
+    ActiveRecord::Base.establish_connection(
+      adapter: 'sqlite3',
+      database: ':memory:'
+    )
     ActiveRecord::Migration.suppress_messages do
       load 'support/schema.rb'
     end

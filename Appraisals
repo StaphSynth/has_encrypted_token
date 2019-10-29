@@ -1,20 +1,4 @@
-appraise 'AR_3.0' do
-  gem 'activerecord', '~> 3.0.20'
-  gem 'sqlite3', '~> 1.3.6'
-  gem 'byebug', '~> 10.0.2'
-end
-
-appraise 'AR_3.1' do
-  gem 'activerecord', '~> 3.1.12'
-  gem 'sqlite3', '~> 1.3.6'
-  gem 'byebug', '~> 10.0.2'
-end
-
-appraise 'AR_3.2' do
-  gem 'activerecord', '~> 3.2.22'
-  gem 'sqlite3', '~> 1.3.6'
-  gem 'byebug', '~> 10.0.2'
-end
+# frozen_string_literal: true
 
 appraise 'AR_4.2' do
   gem 'activerecord', '~> 4.2.11'

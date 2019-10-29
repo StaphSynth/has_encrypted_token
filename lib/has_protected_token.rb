@@ -1,12 +1,15 @@
+# frozen_string_literal: true
+
 require 'active_record'
 require 'bcrypt'
 
 module ActiveRecord
-  module ProtectedToken
+  module ProtectedToken # :nodoc:
     extend ActiveSupport::Concern
 
-    module ClassMethods
-      # == has_protected_token
+    module ClassMethods # :nodoc:
+      ##
+      # == .has_protected_token
       #
       # Adds methods to set and validate against a token
       # that has been hashed and salted using BCrypt.
@@ -66,6 +69,9 @@ module ActiveRecord
       #
       # user2.authenticate_token('super_secret_token')
       # => true
+
+      # TODO: something about the method length
+      # rubocop:disable  Metrics/MethodLength
       def has_protected_token(options = {})
         attribute = options[:column_name] || :token
         cost = options[:cost] || BCrypt::Engine::DEFAULT_COST
@@ -84,13 +90,15 @@ module ActiveRecord
 
         define_method("authenticate_#{attribute}") do |raw_token|
           begin
-            BCrypt::Password.new(self.send(attribute)) == raw_token
+            BCrypt::Password.new(send(attribute)) == raw_token
           rescue BCrypt::Error
             false
           end
         end
       end
+      # rubocop:enable  Metrics/MethodLength
 
+      ##
       # == .generate_token
       # Class method to generate random tokens
       #
@@ -99,18 +107,17 @@ module ActiveRecord
       def generate_token(length = 24)
         n = length.to_i
         SecureRandom.hex(n / 2) # hex returns n * 2
-
-        rescue NoMethodError
-          raise ArgumentError, 'Token length must be an integer'
+      rescue NoMethodError
+        raise ArgumentError, 'Token length must be an integer'
       end
     end
 
     private
 
     def hash_token(raw_token, cost)
-      BCrypt::Password.create(raw_token, :cost => cost)
+      BCrypt::Password.create(raw_token, cost: cost)
     end
   end
 end
 
-ActiveRecord::Base.send(:include, ActiveRecord::ProtectedToken)
+ActiveRecord::Base.include ActiveRecord::ProtectedToken
