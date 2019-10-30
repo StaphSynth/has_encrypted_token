@@ -29,6 +29,14 @@ matrix:
       script: rake lint
       gemfile: gemfiles/AR_4.2.gemfile
 
+deploy:
+  provider: rubygems
+  gem: has_protected_token
+  api_key:
+    secure: "BJclI6dKunv06hNB1ZkyqKnRnZgAFUuyr2TQinCfPCx47yI62zLWYkxGFEHYcLfjLM60lkTHHABg70qozAPTy+2YObaMOl3oCASDcMToPyhoIZngq3YYrphOGPgHD5vgHC9RZiPrbGorY/bM4lqMfhU2VC438/3BFUONgbgwnmJ2D8y4TC4fj2tAifb89cLHM45fFvu4lxbRWAIA/g1lqBBZYMcbbFKm+cAJqP2piXJizWvpOwHwZF7bs9cThsKGkQi9Ya4oDu/cytzmOybP46edapdWOzBvGcqzog7GaoqlUnMJfL2BWWnuLdcT4L17zfiRdnvpBH4F2/u5CR7Dv2Jy07c2/BTMWC1QNwzfVp84fl0qDi+CGaGtww1qNXvzZlVOR0l3pBCwi0rxksFDj4PpMuqWIGNYSgxatn6WoVeas2sP1emT9VLus7G8UWtyGjSk9QE8g8ZiamELi5hbW9MWT1JyfdDYub+oY9svfJBefxB9SA6mG/8Dbhq+VkA7fd6VNAuG9hDmmQx/hI3ymw+sr6iN7EYZq4s3sWz3/CSmioopy1eV+OoY8YsGxwpck3IqqQxQWdAJ8l0Z7o8HyHSTyp5vB6dJNsatVFgMfP74XRGMTD/r1H9CFA029Ekkpvu6FoNFQ6qX13pSlbRXoNp3Dlag7+c1h5ZPVb8D7UE="
+  on:
+    tags: true
+
 before_install:
   - gem install bundler -v 1.17.3
 
