@@ -78,14 +78,14 @@ module ActiveRecord
 
         define_method("regenerate_#{attribute}") do
           raw_token = self.class.generate_token
-          hashed_token = hash_token(raw_token, cost)
 
-          update_attribute(attribute, hashed_token)
+          update_column(attribute, hash_token(raw_token, cost))
           raw_token
         end
 
         define_method("#{attribute}=") do |raw_token|
           super(hash_token(raw_token, cost))
+          raw_token
         end
 
         define_method("authenticate_#{attribute}") do |raw_token|

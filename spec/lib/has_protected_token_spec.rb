@@ -38,12 +38,12 @@ describe ActiveRecord::ProtectedToken do
       end
 
       context 'when an integer is provided' do
-        let(:user) { CostedUser.new }
+        let(:user) { LowCostUser.new }
 
         it 'accepts that instead' do
           expect(BCrypt::Password).to receive(:create).with(
             raw_token,
-            cost: 9
+            cost: 4
           )
 
           user.token = raw_token
@@ -78,7 +78,7 @@ describe ActiveRecord::ProtectedToken do
         user.regenerate_token
       end
 
-      context 'when passed an plain text token' do
+      context 'when passed a plain text token' do
         it 'returns true if it matches the stored value' do
           expect(user.authenticate_token(raw_token)).to eq(true)
         end
