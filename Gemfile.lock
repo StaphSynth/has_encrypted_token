@@ -66,6 +66,7 @@ GEM
     tzinfo (1.2.5)
       thread_safe (~> 0.1)
     unicode-display_width (1.6.0)
+    wwtd (1.4.0)
     zeitwerk (2.2.0)
 
 PLATFORMS
@@ -82,6 +83,7 @@ DEPENDENCIES
   rspec
   rubocop
   sqlite3
+  wwtd
 
 BUNDLED WITH
    1.17.3
