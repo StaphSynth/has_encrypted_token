@@ -1,6 +1,7 @@
-# has_protected_token
+[![Build Status](https://api.travis-ci.com/StaphSynth/has_protected_token.svg?branch=master)](https://travis-ci.com/StaphSynth/has_protected_token)
+[![Gem Version](https://badge.fury.io/rb/has_protected_token.svg)](https://badge.fury.io/rb/has_protected_token)
 
-Current version: _0.0.0beta_. This gem is currently in pre-release beta and a stable release will be made _real soon now_.
+# has_protected_token
 
 ## What?
 
@@ -8,7 +9,7 @@ Abstracts away generating, storing and validating user auth tokens. Use it if yo
 
 ## Installation
 
-Requirements: Ruby >= 2.2, ActiveRecord >= 4.2
+Requirements: Ruby >= 2.3, ActiveRecord >= 4.2
 
 From the command line:
 
