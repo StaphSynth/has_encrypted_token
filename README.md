@@ -20,7 +20,7 @@ $ gem install has_protected_token
 In your project gemfile:
 
 ```ruby
-  gem 'has_protected_token'
+gem 'has_protected_token'
 ```
 
 ## Usage
