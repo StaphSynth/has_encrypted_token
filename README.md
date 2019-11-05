@@ -83,3 +83,7 @@ user.validate_token('incorrect value')
 ```ruby
 has_protected_token cost: 16
 ```
+
+## Contributing
+
+Contributions are very welcome. Please see the [documentation](https://github.com/StaphSynth/has_protected_token/blob/master/CONTRIBUTING.md) for help on geting started.
