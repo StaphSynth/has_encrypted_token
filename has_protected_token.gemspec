@@ -8,10 +8,12 @@ Gem::Specification.new do |s|
   s.description = 'Generate random tokens (or use your own) for any ActiveRecord model. Hashes and salts the token before storage in the database using the same methodology as has_secure_password.'
   s.author      = 'David Allen'
   s.email       = '1337dallen@gmail.com' # yes, I know it's a terrible email address...
-  s.files       = `git ls-files`.split("\n")
   s.homepage    = 'https://github.com/StaphSynth/has_protected_token'
   s.license     = 'MIT'
   s.required_ruby_version = '>= 2.3'
+  s.files = Dir.chdir(File.expand_path(__dir__)) do
+    `git ls-files -z`.split("\x0").reject { |f| f.match(%r{^spec/}) }
+  end
 
   s.add_dependency 'activerecord', '>= 4.2'
   s.add_dependency 'bcrypt', '~> 3.1.1'
