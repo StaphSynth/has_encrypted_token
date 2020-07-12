@@ -5,6 +5,7 @@ rvm:
   - 2.4
   - 2.5
   - 2.6
+  - 2.7
 
 gemfile:
   - gemfiles/AR_4.2.gemfile
@@ -20,6 +21,8 @@ matrix:
     - rvm: 2.4
       gemfile: gemfiles/AR_6.0.gemfile
     - rvm: 2.6
+      gemfile: gemfiles/AR_4.2.gemfile
+    - rvm: 2.7
       gemfile: gemfiles/AR_4.2.gemfile
   include:
     - rvm: 2.6
