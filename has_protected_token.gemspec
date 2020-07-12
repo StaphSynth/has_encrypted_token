@@ -20,12 +20,12 @@ Gem::Specification.new do |s|
 
   s.add_development_dependency 'appraisal'
   s.add_development_dependency 'bump'
-  s.add_development_dependency 'bundler', '~> 1.17.3'
+  s.add_development_dependency 'bundler'
   s.add_development_dependency 'byebug'
   s.add_development_dependency 'database_cleaner'
   s.add_development_dependency 'rake'
   s.add_development_dependency 'rspec'
-  s.add_development_dependency 'rubocop'
+  s.add_development_dependency 'rubocop', '~> 0.81.0'
   s.add_development_dependency 'sqlite3'
   s.add_development_dependency 'wwtd'
 end
